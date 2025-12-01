@@ -1,0 +1,7 @@
+open Printf
+open Aoc2025
+open Aoc2025.Util;;
+
+input_day 1 |> Day1.part1 |> printf "day1 part1: %d\n%!";
+input_day 1 |> Day1.part2 |> printf "day1 part2: %d\n\n%!";
+
