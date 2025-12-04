@@ -16,3 +16,13 @@ let rec window2 f acc l =
   | [ _ ] -> acc
   | n1 :: n2 :: l -> (
       match f acc n1 n2 with None -> acc | Some r -> window2 f r ([ n2 ] @ l))
+
+let find_point mx c =
+  let i =
+    Option.get @@ Array.find_index (fun s -> Array.exists (Char.equal c) s) mx
+  in
+  let j = Option.get @@ Array.find_index (Char.equal c) mx.(i) in
+  Point.create i j
+
+let parse_matrix input =
+  Array.of_list input |> Array.map String.to_seq |> Array.map Array.of_seq
