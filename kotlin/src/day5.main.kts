@@ -16,7 +16,8 @@ fun parseInput(input: List<String>): Pair<List<LongRange>, List<Long>> {
 }
 
 fun LongRange.intersect(other: LongRange): Boolean =
-    this.first in other || this.last in other
+    this.first in other || this.last in other ||
+            other.first in this || other.last in this
 
 fun part1(input: List<String>): Int =
     parseInput(input).let { (ranges, ids) ->
