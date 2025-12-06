@@ -1,12 +1,10 @@
-let ( % ) n m = ((n mod m) + m) mod m
+open Util
+
 let is_even n = n % 2 = 0
 
 let digits n =
   let rec aux n d c = if n / d = 0 then c else aux n (d * 10) (c + 1) in
   aux n 10 1
-
-let intpow base exp =
-  int_of_float (Float.pow (float_of_int base) (float_of_int exp))
 
 let is_invalid n =
   if not (is_even (digits n)) then false
