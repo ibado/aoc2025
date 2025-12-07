@@ -18,7 +18,7 @@ let operators_with_idx input =
   |> Seq.mapi (fun i it -> if it <> ' ' then Some (i, it) else None)
   |> Seq.filter_map Fun.id |> List.of_seq
 
-let calc_part2 op l =
+let calc_part2 (op, l) =
   let init = if op = '*' then 1 else 0 in
   let rec aux op l acc =
     if List.for_all (fun s -> s = "") l then acc
@@ -75,4 +75,4 @@ let part2 input =
   ops
   |> List.mapi (fun i (_, op) ->
          (op, List.map (fun nums -> List.nth nums i) num_rows))
-  |> List.fold_left (fun acc (op, list) -> acc + calc_part2 op list) 0
+  |> sum_of calc_part2

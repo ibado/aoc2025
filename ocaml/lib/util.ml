@@ -37,3 +37,4 @@ let intpow base exp =
 let ( % ) n m = ((n mod m) + m) mod m
 let drop_last s = String.sub s 0 (String.length s - 1)
 let get_last s = String.get s (String.length s - 1)
+let sum_of p l = List.fold_left (fun acc it -> acc + p it) 0 l
