@@ -31,8 +31,6 @@ fun findAccessibleRolls(grid: Grid<Char>): Set<Point> =
         }
     }
 
-fun List<String>.asCharGrid() = map { it.toList() }
-
 val lines = Path("../../input/4.txt").useLines { it.toList() }
 part1(lines).let(::println)
 part2(lines).let(::println)

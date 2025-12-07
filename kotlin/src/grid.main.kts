@@ -17,6 +17,8 @@ typealias Grid<T> = List<List<T>>
 fun Grid<*>.rows() = size
 fun Grid<*>.cols() = first().size
 
+fun List<String>.asCharGrid() = map { it.toList() }
+
 fun <T> generateGrid(rows: Int, cols: Int, generator: (i: Int, j: Int) -> T): Grid<T> =
     List(rows) { i ->
         List(cols) { j ->
