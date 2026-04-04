@@ -6,7 +6,7 @@ import day3
 import day4
 import day5
 import day6
-
+import day7
 
 def run_day(day):
     day_mod = globals().get(f'day{day}', None)
