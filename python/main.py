@@ -21,7 +21,7 @@ def main():
         day = int(sys.argv[2])
         run_day(day)
         return
-    for day in range(1, 26):
+    for day in range(1, 13):
         run_day(day)
 
 main()
