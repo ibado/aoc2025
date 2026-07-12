@@ -5,6 +5,9 @@ import kotlin.io.path.Path
 import kotlin.io.path.useLines
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.time.measureTimedValue
+
+private val connections = 1000
 
 data class Point(val x: Double, val y: Double, val z: Double) {
     override fun toString(): String = "($x, $y, $z)"
@@ -21,7 +24,7 @@ fun part1(lines: List<String>): Int {
     }.pairs()
         .sortedBy { (p1, p2) ->  distance(p1, p2) }
 
-    return computeCircuits(pairsByDistance.take(1000))
+    return computeCircuits(pairsByDistance.take(connections))
         .asSequence()
         .map { it.size }.distinct()
         .sortedByDescending { it }
@@ -29,9 +32,30 @@ fun part1(lines: List<String>): Int {
         .reduce(Int::times)
 }
 
-private fun computeCircuits(pairsByDistance: List<Pair<Point, Point>>): List<Set<Point>> {
+fun part2(lines: List<String>): Int {
+    val pairsByDistance = lines.map {
+        val (x, y, z) = it.split(",").map(String::toDouble)
+        Point(x, y, z)
+    }.pairs()
+        .sortedBy { (p1, p2) ->  distance(p1, p2) }
+
+    var circuits = computeCircuits(pairsByDistance.take(connections))
+
+    for (conn in pairsByDistance.drop(connections)) {
+        circuits = computeCircuits(listOf(conn), circuits)
+        if (circuits.size == 1 && circuits.single().size == lines.size) {
+            return (conn.first.x * conn.second.x).toInt()
+        }
+    }
+
+    error("unreachable")
+}
+
+private fun computeCircuits(
+    pairsByDistance: List<Pair<Point, Point>>,
+    circuits: MutableList<Set<Point>> = mutableListOf()
+): MutableList<Set<Point>> {
     var connections = pairsByDistance.map { (p1, p2) -> setOf(p1, p2) }
-    val circuits = mutableListOf<Set<Point>>()
     var mergeDone = true
     while (mergeDone) {
         mergeDone = false
@@ -56,5 +80,9 @@ private fun computeCircuits(pairsByDistance: List<Pair<Point, Point>>): List<Set
     return circuits
 }
 
+private fun printSolution(lines: List<String>, f: (List<String>) -> Int): Unit =
+    measureTimedValue { f(lines) }.let { (value, time) -> println("result: $value, time: $time") }
+
 val lines = Path("../../input/8.txt").useLines { it.toList() }
-part1(lines).let(::println)
+printSolution(lines, ::part1)
+printSolution(lines, ::part2)
