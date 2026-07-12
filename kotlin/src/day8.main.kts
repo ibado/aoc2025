@@ -20,49 +20,40 @@ fun part1(lines: List<String>): Int {
         Point(x, y, z)
     }.pairs()
         .sortedBy { (p1, p2) ->  distance(p1, p2) }
-        .take(1000)
 
-    val circuits = mutableListOf<Set<Point>>()
-    for ((p1, p2) in  pairsByDistance) {
-        var joined = false
-        for ((idx, circuit) in circuits.withIndex()) {
-            if (p1 in circuit || p2 in circuit) {
-                circuits[idx] += p1
-                circuits[idx] += p2
-                joined = true
-                break
-            }
-        }
-        if (joined) continue
-        circuits.add(mutableSetOf(p1, p2))
-    }
-
-    var mergeDone = true
-    val merged = mutableSetOf<Set<Point>>()
-    val toRemove = mutableSetOf<Set<Point>>()
-    while (mergeDone) {
-        mergeDone = false
-        for ((i, circuit) in circuits.withIndex()) {
-            for (other in circuits.drop(i + 1)) {
-                if (circuit.intersect(other).isNotEmpty()) {
-                    merged.add(circuit + other)
-                    toRemove.add(circuit)
-                    toRemove.add(other)
-                    mergeDone = true
-                }
-            }
-        }
-        circuits.removeAll(toRemove)
-        circuits.addAll(merged)
-        merged.clear()
-        toRemove.clear()
-    }
-
-    return circuits.asSequence()
+    return computeCircuits(pairsByDistance.take(1000))
+        .asSequence()
         .map { it.size }.distinct()
         .sortedByDescending { it }
         .take(3)
         .reduce(Int::times)
+}
+
+private fun computeCircuits(pairsByDistance: List<Pair<Point, Point>>): List<Set<Point>> {
+    var connections = pairsByDistance.map { (p1, p2) -> setOf(p1, p2) }
+    val circuits = mutableListOf<Set<Point>>()
+    var mergeDone = true
+    while (mergeDone) {
+        mergeDone = false
+        for (connection in  connections) {
+            var joined = false
+            for ((idx, circuit) in circuits.withIndex()) {
+                if (connection.intersect(circuit).isNotEmpty()) {
+                    circuits[idx] += connection
+                    joined = true
+                    mergeDone = true
+                    break
+                }
+            }
+            if (joined) continue
+            circuits.add(connection)
+        }
+        if (mergeDone) {
+            connections = circuits.toList()
+            circuits.clear()
+        }
+    }
+    return circuits
 }
 
 val lines = Path("../../input/8.txt").useLines { it.toList() }
