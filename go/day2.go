@@ -30,7 +30,7 @@ func solveDay2(lines iter.Seq[string], test func(string) bool) int {
 	assert(ok)
 	total := 0
 	for r := range parseRanges(line) {
-		for n := r.from; n <= r.to; n++ {
+		for n := r.From; n <= r.To; n++ {
 			num := strconv.Itoa(n)
 			if test(num) {
 				total += n
@@ -78,8 +78,8 @@ func parseRanges(line string) iter.Seq[Range] {
 	return func(yield func(Range) bool) {
 		for r := range strings.SplitSeq(line, ",") {
 			parts := strings.Split(r, "-")
-			from := getOrPanic(strconv.Atoi(parts[0]))
-			to := getOrPanic(strconv.Atoi(parts[1]))
+			from := strToInt(parts[0])
+			to := strToInt(parts[1])
 			if !yield(Range{from, to}) {
 				return
 			}

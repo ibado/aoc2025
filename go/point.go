@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 	"iter"
+	"slices"
 )
 
-var Dirs = []Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+var Orthogonals = []Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+var Diagonals = []Point{{1, 1}, {1, -1}, {-1, -1}, {-1, 1}}
+var AllDirs = slices.Concat(Orthogonals, Diagonals)
 
 type Point struct {
 	x, y int

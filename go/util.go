@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 var debug = true
@@ -10,6 +11,10 @@ func log(a ...any) {
 	if debug {
 		fmt.Println(a...)
 	}
+}
+
+func strToInt(s string) int {
+	return getOrPanic(strconv.Atoi(s))
 }
 
 func assert(cond bool) {
