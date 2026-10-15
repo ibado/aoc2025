@@ -1,5 +1,7 @@
 package main
 
+import "cmp"
+
 func mod(n, divisor int) int {
 	return ((n % divisor) + divisor) % divisor
 }
@@ -25,4 +27,20 @@ func concat(n int, c byte) int {
 	} else {
 		return n*10 + int(c-'0')
 	}
+}
+
+func sumAll[T cmp.Ordered](slice []T) T {
+	var sum T
+	for _, x := range slice {
+		sum += x
+	}
+	return sum
+}
+
+func intPow(base, exp int) int {
+	result := 1
+	for range exp {
+		result *= base
+	}
+	return result
 }

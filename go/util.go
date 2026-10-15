@@ -33,3 +33,28 @@ func getOrPanic[T any](t T, err error) T {
 	assertErrNil(err)
 	return t
 }
+
+func parseNums(line []byte) []int {
+	var s []int
+	i := 0
+	for i < len(line) {
+		isNeg := line[i] == '-'
+		if isDigit(line[i]) || isNeg {
+			var n int = 0
+			if isNeg {
+				i++
+			}
+			for i < len(line) && isDigit(line[i]) {
+				n = concat(n, line[i])
+				i++
+			}
+			if isNeg {
+				n *= -1
+			}
+			s = append(s, n)
+		} else {
+			i++
+		}
+	}
+	return s
+}
