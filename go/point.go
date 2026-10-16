@@ -26,7 +26,7 @@ func (p Point) String() string {
 	return fmt.Sprint(p.x, ",", p.y)
 }
 
-func (p Point) isInRage(n int) bool {
+func (p Point) isInRange(n int) bool {
 	return p.x >= 0 && p.x < n && p.y >= 0 && p.y < n
 }
 

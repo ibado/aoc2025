@@ -51,7 +51,7 @@ func countRollsAround(p Point, mx [][]byte) int {
 	rolls := 0
 	for _, dir := range AllDirs {
 		pd := p.Plus(dir)
-		if pd.isInRage(len(mx)) && mx[pd.x][pd.y] == '@' {
+		if pd.isInRange(len(mx)) && mx[pd.x][pd.y] == '@' {
 			rolls++
 		}
 	}

@@ -14,7 +14,7 @@ type AoCDay interface {
 	Part2(lines iter.Seq[string]) any
 }
 
-var dayarr = []AoCDay{day1{}, day2{}, day3{}, day4{}, day5{}, day6{}}
+var dayarr = []AoCDay{day1{}, day2{}, day3{}, day4{}, day5{}, day6{}, day7{}}
 
 func runDay(dayNum int, day AoCDay) {
 	runPart := func(day int, f func(iter.Seq[string]) any) (any, time.Duration) {
