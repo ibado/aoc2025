@@ -1,5 +1,5 @@
 (require '[aoc])
-(def days '[day1 day2])
+(def days '[day1 day2 day3])
 (apply require days)
 
 (defn solve-day [i ns]

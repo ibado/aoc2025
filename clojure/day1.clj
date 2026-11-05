@@ -31,6 +31,3 @@
                 [50 0])
         second))
 
-(def lines (aoc/input-day 1))
-
-
