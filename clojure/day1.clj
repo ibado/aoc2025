@@ -1,5 +1,4 @@
 (ns day1)
-(require '[aoc])
 
 (defn parse-clicks [s] (parse-long (subs s 1)))
 

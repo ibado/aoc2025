@@ -1,5 +1,4 @@
 (ns day3)
-(require '[aoc])
 
 (defn char-to-digit [c] (Character/digit c 10))
 
