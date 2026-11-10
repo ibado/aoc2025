@@ -10,6 +10,9 @@
   [(mapv #(mapv parse-long (split-line %)) (drop-last 1 input))
    (mapv first (split-line (last input)))])
 
+(defn l2int [l]
+  (parse-long (str/join l)))
+
 (defn part1 [input]
   (let [[num-rows ops] (parse-input input)
         result (mapv #(if (= % \*) 1 0) ops)]
@@ -26,4 +29,22 @@
                  num-rows)
          (apply +))))
 
-(defn part2 [input] 0)
+(defn part2 [input]
+  (let [ops (->> (last input)
+                 (map identity)
+                 (keep #(#{\+ \*} %)))
+        nums (->>
+              (map #(map identity %) input)
+              (apply map list) ; transposed the grid
+              (map (fn [s] (filter #(not= % \space) s)))
+              (map #(take-while Character/isDigit %))
+              (map #(if (empty? %) nil (l2int %))))]
+    (->>
+     (partition-by number? nums)
+     (filter #(not= % '(nil)))
+     (map-indexed (fn [i it]
+                    (let [op (nth ops i)]
+                      (if (= op \*)
+                        (apply * it)
+                        (apply + it)))))
+     (reduce + 0))))

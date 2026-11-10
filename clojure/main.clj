@@ -4,8 +4,8 @@
 
 (defn solve-day [i ns]
   (let [input (aoc/input-day (inc i))]
-    [((ns-resolve ns 'part1) input)
-     ((ns-resolve ns 'part2) input)]))
+    (time [((ns-resolve ns 'part1) input)
+           ((ns-resolve ns 'part2) input)])))
 
 (defn format-day [i [part1 part2]]
   (format
