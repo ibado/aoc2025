@@ -42,9 +42,8 @@
     (->>
      (partition-by number? nums)
      (filter #(not= % '(nil)))
-     (map-indexed (fn [i it]
-                    (let [op (nth ops i)]
-                      (if (= op \*)
-                        (apply * it)
-                        (apply + it)))))
+     (map (fn [op nums]
+            (if (= op \*)
+              (apply * nums)
+              (apply + nums))) ops)
      (reduce + 0))))
